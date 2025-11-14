@@ -1,12 +1,13 @@
-# Callout Component – Step-by-Step Lab
+# Callout Component – Step-by-Step Lab Guide
 
 1. Create the React component  
 2. Add styles using tokens  
 3. Add Storybook documentation  
-4. Add the DXP component files  
-5. Preview locally  
-6. Deploy to a DXP tenant
-   
+4. Create DXP support files using `dxp-next cmp init callout`  
+5. Populate and update DXP files  
+6. Preview locally  
+7. Deploy to a DXP tenant  
+
 ---
 
 ## 1. Create Folder Structure
@@ -17,18 +18,16 @@ Create:
 src/components/callout/
 ```
 
-Inside it, add these files:
+Inside it, add:
 
 ```
 Callout.tsx
 callout.css
 Callout.stories.tsx
-
 dxp/
-  manifest.json
-  main.mjs
-  example.data.json
 ```
+
+You will generate the content of `dxp/` using the DXP CLI.
 
 ---
 
@@ -113,51 +112,37 @@ export const Callout: React.FC<CalloutProps> = ({
 
 ---
 
-## 4. Add Storybook (`Callout.stories.tsx`)
+## 4. Create DXP Support Files Using `dxp-next cmp init callout`
 
-```tsx
-import type { Meta, StoryObj } from "@storybook/react";
-import { Callout } from "./Callout";
+Navigate into the component folder:
 
-const meta: Meta<typeof Callout> = {
-  title: "Components/Callout",
-  component: Callout,
-  args: {
-    variant: "info",
-    heading: "Callout heading",
-    children:
-      "Callout content goes here. This text is editable using Storybook controls."
-  },
-  tags: ["autodocs"]
-};
-
-export default meta;
-type Story = StoryObj<typeof Callout>;
-
-export const Info: Story = {};
-
-export const Success: Story = {
-  args: {
-    variant: "success",
-    heading: "Success callout",
-    children: "Your update was successful."
-  }
-};
-
-export const Warning: Story = {
-  args: {
-    variant: "warning",
-    heading: "Warning callout",
-    children: "Please review this information before continuing."
-  }
-};
 ```
+cd src/components/callout
+```
+
+Run the DXP component initializer:
+
+```
+dxp-next cmp init callout --out-dir ./dxp
+```
+
+This will generate:
+
+```
+dxp/
+  manifest.json
+  main.mjs
+  example.data.json
+  preview-wrapper.html   (depending on CLI version)
+```
+
+These are boilerplate files — you will now update them with the correct markup and schema.
 
 ---
 
-## 5. Add DXP Files
+## 5. Populate and Update DXP Files
 
-### `example.data.json`
+### `dxp/example.data.json`
 
 ```json
 {
@@ -169,7 +154,7 @@ export const Warning: Story = {
 
 ---
 
-### `manifest.json`
+### `dxp/manifest.json`
 
 ```json
 {
@@ -208,7 +193,7 @@ export const Warning: Story = {
 
 ---
 
-### `main.mjs`
+### `dxp/main.mjs`
 
 ```js
 const VALID_VARIANTS = ["info", "success", "warning"];
@@ -247,28 +232,49 @@ export default {
 
 ## 6. Preview in DXP
 
+To run the component in local preview:
+
 ```
 dxp-next component dev --component-path src/components/callout/dxp
 ```
+
+Check:
+
+- Variants  
+- Token-based styling  
+- Matching React markup  
+- Heading/body content  
 
 ---
 
 ## 7. Deploy to DXP
 
-1. Update the version in `manifest.json`
-2. Run:
+1. Update version:
+
+```json
+"version": "0.0.2"
+```
+
+2. Deploy:
 
 ```
 dxp-next component deploy --component-path src/components/callout/dxp
 ```
 
+3. In DXP Console:
+   - Add to a **Component Set**
+   - Attach the set to a **Site**
+   - Insert Callout on a page
+
 ---
 
 ## 8. Final Checklist
 
-- React component matches design  
-- Token-based styles  
+- React component created  
+- Token-based styles applied  
 - Storybook stories added  
-- DXP manifest + main implemented  
-- Local DXP preview working  
-- Deployed to tenant successfully  
+- `dxp-next cmp init callout` used to scaffold DXP files  
+- Manifest and main updated to real markup  
+- Local preview successful  
+- Deployment to tenant complete  
+

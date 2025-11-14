@@ -1,16 +1,12 @@
-# Callout Component – Full Step-by-Step Exercise Guide
-
-This document walks you through building the **Callout** component end-to-end:
+# Callout Component – Step-by-Step Lab
 
 1. Create the React component  
 2. Add styles using tokens  
 3. Add Storybook documentation  
 4. Add the DXP component files  
 5. Preview locally  
-6. Deploy to a DXP tenant  
-
-All code snippets are included for copy/paste.
-
+6. Deploy to a DXP tenant
+   
 ---
 
 ## 1. Create Folder Structure
